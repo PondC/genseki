@@ -43,11 +43,8 @@ export function CollectionListSearch(props: CollectionListSearchProps) {
       prefix={<BaseIcon icon={MagnifyingGlassIcon} size="md" />}
       className="w-full"
       isPending={props.isLoading}
-      value={search}
-      onChange={(e) => {
-        setSearch(e)
-        props.onSearchChange?.(e)
-      }}
+      value={props.search || search}
+      onChange={props.onSearchChange || setSearch}
     />
   )
 }

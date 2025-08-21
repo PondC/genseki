@@ -190,13 +190,13 @@ export function ClientCollectionListView() {
         slug={listViewProps.slug}
         onDelete={() => deleteMutation.mutate(rowSelectionIds)}
         isShowDeleteButton={isRowsSelected}
-        search={debouncedSearch}
-        onSearchChange={(val) => {
-          setSearch(val)
-        }}
-        onFilterChange={(val) => {
-          setFilter(val)
-        }}
+        // Optional: if need to acces value or custom function
+        // search={debouncedSearch}
+        // onSearchChange={setSearch}
+        // onFilterChange={(val) => {
+        //   setFilter(val)
+        // }}
+        // Optional: if need to acces value or custom function
         isLoading={isLoading}
       />
       <div className="ring ring-red-500 p-4">
