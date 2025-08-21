@@ -130,6 +130,12 @@ function createCollectionDefaultFindManyHandler<
 
     const where: any = {}
 
+    // console.log('model >> ', model) // type ?
+    // console.log('listConfiguration >>> ', listConfiguration) // ?? whats this
+    console.log('+++++ What am I getting at api side >> ', args)
+
+    // Filter === Where
+
     // Configured searchable columns.
     if (search && search.trim()) {
       const searchFields = listConfiguration?.search
@@ -550,6 +556,7 @@ export function getCollectionDefaultFindManyApiRoute(args: {
         search: z.string().optional(),
         sortBy: z.string().optional(),
         sortOrder: z.enum(['asc', 'desc']).optional(),
+        filter: z.string().optional(),
       }),
       responses: {
         200: z.object({
@@ -571,6 +578,7 @@ export function getCollectionDefaultFindManyApiRoute(args: {
         search: payload.query.search,
         sortBy: payload.query.sortBy,
         sortOrder: payload.query.sortOrder,
+        filter: payload.query.filter,
       })
 
       return {

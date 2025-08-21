@@ -44,7 +44,10 @@ export function CollectionListSearch(props: CollectionListSearchProps) {
       className="w-full"
       isPending={props.isLoading}
       value={search}
-      onChange={setSearch}
+      onChange={(e) => {
+        setSearch(e)
+        props.onSearchChange?.(e)
+      }}
     />
   )
 }

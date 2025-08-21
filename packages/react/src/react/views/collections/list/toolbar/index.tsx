@@ -49,7 +49,8 @@ export function CollectionListToolbar(props: CollectionListToolbarProps) {
           onSearchChange={props.onSearchChange}
           search={props.search}
         />
-        <CollectionListFilter isLoading={props.isLoading} /> {/* TODO: Filter */}
+        <CollectionListFilter isLoading={props.isLoading} onFilterChange={props.onFilterChange} />{' '}
+        {/* TODO: Filter */}
         {actions?.create && <CollectionListCreate isLoading={props.isLoading} slug={props.slug} />}
       </div>
     </div>

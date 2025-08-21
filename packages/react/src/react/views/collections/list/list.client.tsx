@@ -46,9 +46,27 @@ export function ClientCollectionListView() {
   const navigation = useNavigation()
   const queryClient = useQueryClient()
   const listViewProps = useListViewPropsContext()
-  const { pagination, isRowsSelected, rowSelectionIds, setRowSelection } = useTableStatesContext()
+  const {
+    pagination,
+    isRowsSelected,
+    rowSelectionIds,
+    setRowSelection,
+    // search,
+    debouncedSearch,
+    setSearch,
+    // filter,
+    debouncedFilter,
+    setFilter,
+  } = useTableStatesContext()
 
-  const query = useCollectionListQuery({ slug: listViewProps.slug })
+  console.log('listViewProps >>>>>> ', listViewProps)
+
+  // ME HERE
+  const query = useCollectionListQuery({
+    slug: listViewProps.slug,
+    search: debouncedSearch,
+    filter: debouncedFilter,
+  })
 
   const deleteMutation = useCollectionDeleteMutation({
     slug: listViewProps.slug,
@@ -172,17 +190,26 @@ export function ClientCollectionListView() {
         slug={listViewProps.slug}
         onDelete={() => deleteMutation.mutate(rowSelectionIds)}
         isShowDeleteButton={isRowsSelected}
+        search={debouncedSearch}
+        onSearchChange={(val) => {
+          setSearch(val)
+        }}
+        onFilterChange={(val) => {
+          setFilter(val)
+        }}
         isLoading={isLoading}
       />
-      <TanstackTable
-        table={table}
-        loadingItems={pagination.pageSize}
-        className="static"
-        onRowClick="toggleSelect"
-        isLoading={isLoading}
-        isError={isError}
-        configuration={listViewProps.listConfiguration}
-      />
+      <div className="ring ring-red-500 p-4">
+        <TanstackTable
+          table={table}
+          loadingItems={pagination.pageSize}
+          className="static"
+          onRowClick="toggleSelect"
+          isLoading={isLoading}
+          isError={isError}
+          configuration={listViewProps.listConfiguration}
+        />
+      </div>
       <CollectionListPagination totalPage={query.data?.totalPage} />
     </>
   )
