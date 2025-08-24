@@ -116,14 +116,21 @@ export const PostClientToolbar = (props: { children?: React.ReactNode }) => {
  */
 export const PostClientTable = (props: { children?: React.ReactNode }) => {
   const listViewProps = useListViewPropsContext()
-  const { setRowSelection } = useTableStatesContext()
+
+  console.log('listViewProps >>>>>> ', listViewProps)
+
+  const { setRowSelection, debouncedSearch, debouncedFilter } = useTableStatesContext()
 
   const queryClient = useQueryClient()
 
   const navigation = useNavigation()
 
   // Example of fethcing list data
-  const query = useCollectionListQuery({ slug: listViewProps.slug })
+  const query = useCollectionListQuery({
+    slug: listViewProps.slug,
+    search: debouncedSearch,
+    filter: debouncedFilter,
+  })
 
   const deleteMutation = useCollectionDeleteMutation({
     slug: listViewProps.slug,
@@ -245,6 +252,8 @@ export const PostClientTable = (props: { children?: React.ReactNode }) => {
     columns: enhancedColumns,
     listConfiguration: listViewProps.listConfiguration,
   })
+
+  console.log('Inside query >>> ', query.data)
 
   return (
     <>

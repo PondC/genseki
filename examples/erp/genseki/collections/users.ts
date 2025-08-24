@@ -29,7 +29,8 @@ const list = builder.list(fields, {
   columns: columns,
   configuration: {
     search: ['name'],
-    sortBy: ['name'],
+    sortBy: ['name', 'email'],
+    filterBy: ['name', 'email'],
   },
 })
 

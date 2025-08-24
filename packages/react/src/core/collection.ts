@@ -318,9 +318,28 @@ export type ExtractSortableColumns<TFields extends Fields> = {
     : never
 }[keyof TFields['shape']]
 
+// Extract filterable columns from fields
+// export type ExtractFilterableColumns<TFields extends Fields> = {
+//   [K in keyof TFields['shape']]: TFields['shape'][K] extends FieldColumnShape
+//     ? TFields['shape'][K]['$client']['column']['dataType'] extends
+//         | typeof DataType.STRING
+//         | typeof DataType.INT
+//         | typeof DataType.FLOAT
+//         | typeof DataType.DATETIME
+//         | typeof DataType.BIGINT
+//         | typeof DataType.DECIMAL
+//       ? K
+//       : never
+//     : never
+// }[keyof TFields['shape']]
+export type ExtractFilterableColumns<TFields extends Fields> = {
+  [K in keyof TFields['shape']]: TFields['shape'][K] extends FieldColumnShape ? K : never
+}[keyof TFields['shape']]
+
 export interface ListConfiguration<TFields extends Fields> {
   search?: ExtractSearchableColumns<TFields>[]
   sortBy?: ExtractSortableColumns<TFields>[]
+  filterBy?: ExtractFilterableColumns<TFields>[] // ME HERE
 }
 
 export interface BaseData {

@@ -180,6 +180,8 @@ export function ClientCollectionListView() {
     listConfiguration: listViewProps.listConfiguration,
   })
 
+  console.log('Inside query >>> ', query.data)
+
   const isError = deleteMutation.isError || query.isError
   const isLoading = deleteMutation.isPending || query.isPending || query.isFetching
 
