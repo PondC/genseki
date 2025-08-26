@@ -30,6 +30,8 @@ import {
 
 import type { fields } from './posts'
 
+import { optionsFetchPathName } from '../../../../packages/react/src/react/views/collections/list/toolbar/components/filter/filter-helper'
+
 type Post = InferFields<typeof fields>
 const columnHelper = createColumnHelper<Post>()
 
@@ -102,6 +104,13 @@ export const PostClientToolbar = (props: { children?: React.ReactNode }) => {
   return (
     <div>
       <CollectionListToolbar
+        filterOptions={Object.values(listViewProps.fieldsClient.shape).map((field) => {
+          return {
+            fieldShape: field,
+            optionsName: optionsFetchPathName(field),
+          }
+        })}
+        allowedFilters={listViewProps.listConfiguration?.filterBy || []}
         actions={listViewProps.actions}
         slug={listViewProps.slug}
         isShowDeleteButton={isShowDeleteButton}
@@ -116,8 +125,6 @@ export const PostClientToolbar = (props: { children?: React.ReactNode }) => {
  */
 export const PostClientTable = (props: { children?: React.ReactNode }) => {
   const listViewProps = useListViewPropsContext()
-
-  console.log('listViewProps >>>>>> ', listViewProps)
 
   const { setRowSelection, debouncedSearch, debouncedFilter } = useTableStatesContext()
 
@@ -252,8 +259,6 @@ export const PostClientTable = (props: { children?: React.ReactNode }) => {
     columns: enhancedColumns,
     listConfiguration: listViewProps.listConfiguration,
   })
-
-  console.log('Inside query >>> ', query.data)
 
   return (
     <>

@@ -180,7 +180,7 @@ const list = builder.list(fields, {
   configuration: {
     search: ['title'],
     sortBy: ['updatedAt', 'title'],
-    filterBy: ['updatedAt', 'title', 'example'], // so far this hasnt been used yet
+    filterBy: ['updatedAt', 'title', 'example', 'content'],
   },
   options: options,
   actions: { create: true, delete: true, one: true, update: true },

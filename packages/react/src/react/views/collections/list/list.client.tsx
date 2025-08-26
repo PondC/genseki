@@ -12,6 +12,7 @@ import { useListViewPropsContext } from './providers'
 import { useCollectionListTable } from './table'
 import { CollectionListPagination } from './table/pagination'
 import { CollectionListToolbar } from './toolbar'
+import { optionsFetchPathName } from './toolbar/components/filter/filter-helper'
 
 import type { BaseData } from '../../../../core'
 import {
@@ -53,13 +54,9 @@ export function ClientCollectionListView() {
     setRowSelection,
     // search,
     debouncedSearch,
-    setSearch,
     // filter,
     debouncedFilter,
-    setFilter,
   } = useTableStatesContext()
-
-  console.log('listViewProps >>>>>> ', listViewProps)
 
   // ME HERE
   const query = useCollectionListQuery({
@@ -180,14 +177,19 @@ export function ClientCollectionListView() {
     listConfiguration: listViewProps.listConfiguration,
   })
 
-  console.log('Inside query >>> ', query.data)
-
   const isError = deleteMutation.isError || query.isError
   const isLoading = deleteMutation.isPending || query.isPending || query.isFetching
 
   return (
     <>
       <CollectionListToolbar
+        filterOptions={Object.values(listViewProps.fieldsClient.shape).map((field) => {
+          return {
+            fieldShape: field,
+            optionsName: optionsFetchPathName(field),
+          }
+        })}
+        allowedFilters={listViewProps.listConfiguration?.filterBy || []}
         actions={listViewProps.actions}
         slug={listViewProps.slug}
         onDelete={() => deleteMutation.mutate(rowSelectionIds)}
@@ -201,17 +203,15 @@ export function ClientCollectionListView() {
         // Optional: if need to acces value or custom function
         isLoading={isLoading}
       />
-      <div className="ring ring-red-500 p-4">
-        <TanstackTable
-          table={table}
-          loadingItems={pagination.pageSize}
-          className="static"
-          onRowClick="toggleSelect"
-          isLoading={isLoading}
-          isError={isError}
-          configuration={listViewProps.listConfiguration}
-        />
-      </div>
+      <TanstackTable
+        table={table}
+        loadingItems={pagination.pageSize}
+        className="static"
+        onRowClick="toggleSelect"
+        isLoading={isLoading}
+        isError={isError}
+        configuration={listViewProps.listConfiguration}
+      />
       <CollectionListPagination totalPage={query.data?.totalPage} />
     </>
   )

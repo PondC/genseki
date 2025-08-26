@@ -68,8 +68,6 @@ export function TanstackTable<T>({
   const errorMessage = 'Error'
   const emptyMessage = 'No data'
 
-  console.log('!!!!! TABLE"s configuration >>> ', configuration)
-
   const containerRef = useRef<HTMLTableElement>(null)
 
   const onRowClick =
