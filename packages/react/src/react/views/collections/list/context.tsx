@@ -59,7 +59,7 @@ export interface CollectionListContextValue<T extends BaseData = BaseData> {
   invalidateList: (page?: number) => Promise<void>
 }
 
-const ColectionListContext = createContext<CollectionListContextValue>(null!)
+const CollectionListContext = createContext<CollectionListContextValue>(null!)
 
 export interface CollectionListProviderProps<T extends BaseData = BaseData> {
   children?: React.ReactNode
@@ -127,7 +127,7 @@ function _CollectionListProvider<T extends BaseData>(props: CollectionListProvid
   )
 
   return (
-    <ColectionListContext.Provider
+    <CollectionListContext.Provider
       value={{
         ...rest,
         ...context,
@@ -143,7 +143,7 @@ function _CollectionListProvider<T extends BaseData>(props: CollectionListProvid
       }}
     >
       {children}
-    </ColectionListContext.Provider>
+    </CollectionListContext.Provider>
   )
 }
 
@@ -156,7 +156,7 @@ export function CollectionListProvider<T extends BaseData>(props: CollectionList
 }
 
 export function useCollectionList<T extends BaseData>() {
-  const value = useContext(ColectionListContext)
+  const value = useContext(CollectionListContext)
   if (!value) {
     throw new Error('"useCollectionList" must be used within a "CollectionListProvider"')
   }
